@@ -30,4 +30,5 @@ jobs:
         if: github.ref_type == 'tag'
         with:
           files: kernel
-            
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
