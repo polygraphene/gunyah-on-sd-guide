@@ -19,7 +19,7 @@ It might work on other devices with gunyah hypervisor. I would appreciate it if 
 ## Instruction
 
 ### 1. Download prerequisites
-Go to [releases](https://github.com/polygraphene/gunyah-on-sd-guide/releases) and download `crosvm-a16`, `libbinder_ndk.so` and `libbinder.so`.
+Go to [releases v0.0.2](https://github.com/polygraphene/gunyah-on-sd-guide/releases/tag/v0.0.2) to download `crosvm-a16`, `libbinder_ndk.so` and `libbinder.so`.
 Then put those files to the device.
 
 ```
@@ -57,40 +57,10 @@ It can run the kernel, but the init stops because no proper disks are specified.
 
 You could investigate how the disk is created, for example by examining the behavior of the `vm run-microdroid --protected` command, but in my case, I shifted toward running Debian with a custom kernel.
 
-### 3. Compile kernel
+### 3. Get the kernel
 You can skip it if you download `kernel` file from release page.
 
-Download and compile source code of linux kernel 6.15.3 (latest version as of writing it) by the following commands.
-I would recommend to use Linux PC (or WSL) to build kernel. Might works on Termux, but should be a bit slow.
-```
-$ sudo apt install llvm-19 clang-19 lld-19 bison flex bc
-$ wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.15.3.tar.xz
-$ tar xvf linux-6.15.3.tar.xz
-$ cd linux-6.15.3/
-$ wget https://android.googlesource.com/kernel/common/+archive/refs/tags/android-15.0.0_r0.81/arch/arm64/configs.tar.gz
-$ tar xvf configs.tar.gz microdroid_defconfig
-$ cp microdroid_defconfig .config
-$ ./scripts/config --set-str SERIAL_8250_RUNTIME_UARTS 4 \
--e CGROUPS \
--e CGROUP_CPUACCT \
--e CGROUP_DEBUG \
--e CGROUP_DEVICE \
--e CGROUP_DMEM \
--e CGROUP_FAVOR_DYNMODS \
--e CGROUP_FREEZER \
--e CGROUP_MISC \
--e CGROUP_PERF \
--e CGROUP_PIDS \
--e CGROUP_RDMA \
--e CGROUP_SCHED \
--e CGROUP_WRITEBACK \
--e DEVTMPFS
-$ echo | make LLVM=-19 ARCH=arm64 -j10 Image
-...
-  SORTTAB vmlinux
-  OBJCOPY arch/arm64/boot/Image
-```
-The kernel image will be created on `arch/arm64/boot/Image` if you succeeded.
+If you want to build it yourself, see https://github.com/polygraphene/gunyah-on-sd-guide/blob/main/build-linux.sh. This scripts build kernel in `build/arch/arm64/boot/Image`.
 
 Put them in the devices.
 ```
