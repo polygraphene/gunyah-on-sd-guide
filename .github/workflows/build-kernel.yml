@@ -1,6 +1,9 @@
 name: Build kernel
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -13,8 +16,18 @@ jobs:
       - name: Build
         run: bash ./build-linux.sh
 
+      - name: Rename
+        run: mv build/arch/arm64/boot/Image kernel
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v5.0.0
         with:
           name: kernel
-          path: build/arch/arm64/boot/Image
+          path: kernel
+          
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: kernel
+            
