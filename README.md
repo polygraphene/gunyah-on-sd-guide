@@ -198,6 +198,11 @@ https://cs.android.com/android/platform/superproject/main/+/main:packages/module
 2. I'm trying to enable graphics acceleration (virtio\_gpu), but currently not working. If anyone knows anything about it, please let me know.
 3. [packages/modules/Virtualization/docs](https://cs.android.com/android/platform/superproject/main/+/main:packages/modules/Virtualization/docs/;drc=2cb8e7397b171e0eea0d0c16e099a004da157e80) contains many documents about AVF and pvmfw.
 
+## Related works
+
+1. [gunyah-script](https://github.com/Imacolombian346/gunyah-script) by @Imacolombian346
+   - Convenient scripts to run VMs more easily
+
 ## Links
 AVF documentation  
 https://cs.android.com/android/platform/superproject/main/+/main:packages/modules/Virtualization/docs/;drc=2cb8e7397b171e0eea0d0c16e099a004da157e80
